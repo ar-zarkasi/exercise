@@ -11,11 +11,8 @@ services:
     container_name: app-zakat
     restart: unless-stopped
     working_dir: /var/www/html/app
-    depends_on:
-      - db-zakat
     volumes:
       - ./app-zakat:var/www/html/app
-      - /var/www/html/app/vendor
     networks:
       - net-dev
   nginx-zakat:
