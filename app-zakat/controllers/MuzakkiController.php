@@ -13,6 +13,11 @@ use yii\filters\VerbFilter;
  */
 class MuzakkiController extends Controller
 {
+
+    public function init() {
+        parent::init();
+        $this->viewPath = '@app/views/muzakki'; // or before init()
+    }
     /**
      * @inheritDoc
      */

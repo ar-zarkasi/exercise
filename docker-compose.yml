@@ -12,7 +12,8 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html/app
     volumes:
-      - ./app-zakat:var/www/html/app
+      - /var/www/html/app/vendor
+      - ./app-zakat/web/assets:/var/www/html/app/web/assets
     networks:
       - net-dev
   nginx-zakat:
