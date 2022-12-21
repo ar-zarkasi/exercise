@@ -1,0 +1,53 @@
+version: "3"
+services:
+  db-zakat:
+    image: mariadb:latest
+    container_name: db-zakat
+    restart: always
+    ports:
+      - "8036:3306"
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      - MARIADB_DATABASE=zakatdb
+      - MARIADB_ROOT_PASSWORD=123456
+    networks:
+      - net-dev
+  app-zakat:
+    build: 
+      args:
+        user: "zakat"
+        uid: 1000
+      context: ./app-zakat
+    image: app-zakat
+    env_file: ./app-zakat/.env
+    container_name: app-zakat
+    restart: unless-stopped
+    working_dir: /var/www/html/app
+    depends_on:
+      - db-zakat
+    volumes:
+      - ./app-zakat:var/www/html/app
+      - /var/www/html/app/vendor
+    networks:
+      - net-dev
+  nginx-zakat:
+    image: nginx:1.14
+    container_name: nginx-zakat
+    restart: unless-stopped
+    ports:
+      - 80:80
+    depends_on:
+      - app-zakat
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./app-zakat:/var/www/html/app
+    networks:
+      - net-dev
+
+networks:
+  net-dev:
+    name: net-dev
+    driver: bridge
+  
+    
