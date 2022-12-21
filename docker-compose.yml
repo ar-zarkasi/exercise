@@ -13,7 +13,7 @@ services:
     working_dir: /var/www/html/app
     volumes:
       - /var/www/html/app/vendor
-      - ./app-zakat/web/assets:/var/www/html/app/web/assets
+      - ./app-zakat:/var/www/html/app
     networks:
       - net-dev
   nginx-zakat:
